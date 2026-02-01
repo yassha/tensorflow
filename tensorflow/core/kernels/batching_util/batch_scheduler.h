@@ -39,6 +39,7 @@ limitations under the License.
 #include <utility>
 #include <vector>
 
+#include "absl/status/status.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/string_view.h"
 #include "absl/synchronization/notification.h"
@@ -96,6 +97,11 @@ class BatchTask {
   // kCritical.
   virtual tsl::criticality::Criticality criticality() const {
     return tsl::criticality::Criticality::kCritical;
+  }
+
+  // Called when the task is finished, either successfully or with an error.
+  virtual void FinishTask(const absl::Status& status) {
+    // Default implementation does nothing. Subclasses should override.
   }
 };
 
